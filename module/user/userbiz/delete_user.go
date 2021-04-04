@@ -9,7 +9,7 @@ import (
 
 // DeleteUserStore delete action biz
 type DeleteUserStore interface {
-	FindDataWithCondition(ctx context.Context, condition map[string]interface{}) (*usermodel.User, *common.AppError)
+	FindDataWithCondition(ctx context.Context, condition map[string]interface{}, moreInfo ...string) (*usermodel.User, *common.AppError)
 	Delete(ctx context.Context, id int) *common.AppError
 }
 

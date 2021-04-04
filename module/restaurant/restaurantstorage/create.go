@@ -8,7 +8,7 @@ import (
 	"github.com/thanhdat1902/restapi/food_deli/module/restaurant/restaurantmodel"
 )
 
-func (s *store) Create(ctx context.Context, res *restaurantmodel.CreateRestaurant) *common.AppError {
+func (s *store) Create(ctx context.Context, res *restaurantmodel.RestaurantCreate) *common.AppError {
 
 	db := s.db
 

@@ -9,7 +9,7 @@ import (
 
 type UpdateRestaurantStore interface {
 	FindDataWithCondition(ctx context.Context, condition map[string]interface{}) (*restaurantmodel.Restaurant, *common.AppError)
-	Update(ctx context.Context, res *restaurantmodel.Restaurant) *common.AppError
+	Update(ctx context.Context, res *restaurantmodel.RestaurantUpdate) *common.AppError
 }
 
 type updateRestaurantBiz struct {
@@ -20,7 +20,7 @@ func NewUpdateRestaurantBiz(store UpdateRestaurantStore) *updateRestaurantBiz {
 	return &updateRestaurantBiz{store: store}
 }
 
-func (biz *updateRestaurantBiz) UpdateRestaurant(ctx context.Context, res *restaurantmodel.Restaurant) *common.AppError {
+func (biz *updateRestaurantBiz) UpdateRestaurant(ctx context.Context, res *restaurantmodel.RestaurantUpdate) *common.AppError {
 	data, err := biz.store.FindDataWithCondition(ctx, map[string]interface{}{"id": res.ID})
 	if err != nil {
 		return common.ErrCannotGetEntity(restaurantmodel.Entity, err)

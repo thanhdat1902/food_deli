@@ -8,7 +8,7 @@ import (
 )
 
 type GetUserStore interface {
-	FindDataWithCondition(ctx context.Context, condition map[string]interface{}) (*usermodel.User, *common.AppError)
+	FindDataWithCondition(ctx context.Context, condition map[string]interface{}, moreInfo ...string) (*usermodel.User, *common.AppError)
 }
 
 type getUserBiz struct {

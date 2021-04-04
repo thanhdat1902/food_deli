@@ -23,7 +23,6 @@ import (
 // }
 
 func main() {
-
 	// Connect to db
 	dsn := "admin:admin@tcp(127.0.0.1:3307)/food_delivery?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})

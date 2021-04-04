@@ -38,8 +38,10 @@ func (j *Image) Value() (driver.Value, error) {
 	return json.Marshal(j)
 }
 
+// Array of image
 type Images []Image
 
+// Marshal, unmarshal array of image
 func (j *Images) Scan(value interface{}) error {
 	bytes, ok := value.([]byte)
 	if !ok {

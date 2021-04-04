@@ -9,11 +9,12 @@ import (
 )
 
 // SetupHomeRoute : Home router
-func  SetUpHomeRoute(r *gin.Engine, appCtx common.DBProvider) {
+func SetUpHomeRoute(r *gin.Engine, appCtx common.DBProvider) {
 	// Apply recover middleware
 	r.Use(middleware.Recover(appCtx))
 	// API list
 	routerV1 := r.Group("/v1")
+	routerV1.POST("/register", ginuser.CreateUser(appCtx))
 	resRoute := routerV1.Group("/restaurants")
 	{
 		resRoute.GET("", ginrestaurant.ListRestaurant(appCtx))

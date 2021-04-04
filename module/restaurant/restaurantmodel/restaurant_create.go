@@ -5,7 +5,7 @@ import (
 )
 
 // Restaurant type
-type Restaurant struct {
+type RestaurantCreate struct {
 	common.SQLModel `json:",inline"`
 	Name            string        `json:"name" form:"name" gorm:"column:name"`
 	CityID          *int          `json:"city_id" form:"city_id" gorm:"column:city_id"`
@@ -18,10 +18,7 @@ type Restaurant struct {
 	Description     string        `json:"description" form:"description" gorm:"column:description"`
 }
 
-// Entity name
-var Entity = "Restaurant"
-
 // TableName of restaurants
-func (Restaurant) TableName() string {
+func (RestaurantCreate) TableName() string {
 	return "restaurants"
 }

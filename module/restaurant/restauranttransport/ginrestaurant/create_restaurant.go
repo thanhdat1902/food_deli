@@ -13,7 +13,7 @@ import (
 func CreateRestaurant(provider common.DBProvider) func(c *gin.Context) {
 	return func(c *gin.Context) {
 
-		var res restaurantmodel.CreateRestaurant
+		var res restaurantmodel.RestaurantCreate
 		if err := c.ShouldBind(&res); err != nil {
 			c.JSON(http.StatusBadRequest, common.ErrInvalidRequest(err))
 			return

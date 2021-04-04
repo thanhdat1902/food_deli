@@ -13,7 +13,7 @@ import (
 
 func UpdateRestaurant(provider common.DBProvider) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		var data restaurantmodel.Restaurant
+		var data restaurantmodel.RestaurantUpdate
 		id, _ := strconv.Atoi(c.Param("restaurant-id"))
 		if err := c.ShouldBind(&data); err != nil {
 			c.JSON(http.StatusBadRequest, common.ErrInvalidRequest(err))

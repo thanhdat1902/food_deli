@@ -7,7 +7,7 @@ import (
 	"github.com/thanhdat1902/restapi/food_deli/module/restaurant/restaurantmodel"
 )
 
-func (s *store) Update(ctx context.Context, res *restaurantmodel.Restaurant) *common.AppError {
+func (s *store) Update(ctx context.Context, res *restaurantmodel.RestaurantUpdate) *common.AppError {
 	db := s.db
 	db = db.Table(restaurantmodel.Restaurant{}.TableName())
 	db = db.Where("id=?", res.ID)
