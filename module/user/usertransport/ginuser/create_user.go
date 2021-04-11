@@ -21,13 +21,11 @@ func CreateUser(provider common.DBProvider) func(c *gin.Context) {
 		biz := userbiz.NewCreateUserBiz(store, md5)
 
 		if err := c.ShouldBind(&user); err != nil {
-			c.JSON(http.StatusBadRequest, common.ErrInvalidRequest(err))
-			return
+			panic(common.ErrInvalidRequest(err))
 		}
 
 		if err := biz.Create(c.Request.Context(), &user); err != nil {
-			c.JSON(err.StatusCode, err)
-			return
+			panic(common.ErrCannotCreateEntity(usermodel.EntityName, err))
 		}
 		c.JSON(http.StatusCreated, common.SimpleSuccessResponse(1))
 	}

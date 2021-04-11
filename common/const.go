@@ -1,5 +1,5 @@
 package common
 
 const (
-	dbType = 1
+	DbType = 1
 )

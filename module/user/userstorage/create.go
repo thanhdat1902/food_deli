@@ -7,7 +7,7 @@ import (
 	"github.com/thanhdat1902/restapi/food_deli/module/user/usermodel"
 )
 
-func (s *store) Create(ctx context.Context, user *usermodel.UserCreate) *common.AppError {
+func (s *store) Create(ctx context.Context, user *usermodel.UserCreate) error {
 	db := s.db.Begin()
 
 	if err := db.Table(user.TableName()).Create(&user).Error; err != nil {

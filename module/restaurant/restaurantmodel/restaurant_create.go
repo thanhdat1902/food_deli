@@ -11,7 +11,7 @@ type RestaurantCreate struct {
 	CityID          *int          `json:"city_id" form:"city_id" gorm:"column:city_id"`
 	Addr            *string       `json:"addr" form:"addr" gorm:"column:addr"`
 	Lat             *float64      `json:"lat" form:"lat" gorm:"column:lat"`
-	Long            *float64      `json:"long" form:"long" gorm:"column:long"`
+	Long            *float64      `json:"lng" form:"lng" gorm:"column:lng"`
 	Logo            *common.Image `json:"logo" gorm:"column:logo"`
 	OpenHour        *string       `json:"open_hour" form:"open_hour" gorm:"column:open_hour"`
 	CloseHour       *string       `json:"close_hour" form:"close_hour" gorm:"column:close_hour"`

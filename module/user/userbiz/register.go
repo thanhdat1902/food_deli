@@ -8,8 +8,8 @@ import (
 )
 
 type CreateUserStore interface {
-	FindDataWithCondition(ctx context.Context, condition map[string]interface{}, moreInfo ...string) (*usermodel.User, *common.AppError)
-	Create(ctx context.Context, user *usermodel.UserCreate) *common.AppError
+	FindDataWithCondition(ctx context.Context, condition map[string]interface{}, moreInfo ...string) (*usermodel.User, error)
+	Create(ctx context.Context, user *usermodel.UserCreate) error
 }
 type Hasher interface {
 	Hash(data string) string
@@ -23,7 +23,7 @@ func NewCreateUserBiz(store CreateUserStore, hasher Hasher) *createUserBiz {
 	return &createUserBiz{store: store, hasher: hasher}
 }
 
-func (biz *createUserBiz) Create(ctx context.Context, user *usermodel.UserCreate) *common.AppError {
+func (biz *createUserBiz) Create(ctx context.Context, user *usermodel.UserCreate) error {
 	data, err := biz.store.FindDataWithCondition(ctx, map[string]interface{}{"email": user.Email})
 	if data != nil {
 		return common.ErrEntityExisted(usermodel.EntityName, err)

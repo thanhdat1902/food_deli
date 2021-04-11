@@ -9,8 +9,8 @@ import (
 
 // DeleteUserStore delete action biz
 type DeleteUserStore interface {
-	FindDataWithCondition(ctx context.Context, condition map[string]interface{}, moreInfo ...string) (*usermodel.User, *common.AppError)
-	Delete(ctx context.Context, id int) *common.AppError
+	FindDataWithCondition(ctx context.Context, condition map[string]interface{}, moreInfo ...string) (*usermodel.User, error)
+	Delete(ctx context.Context, id int) error
 }
 
 type deleteUserBiz struct {
@@ -22,7 +22,7 @@ func NewDeleteUserBiz(store DeleteUserStore) *deleteUserBiz {
 	return &deleteUserBiz{store: store}
 }
 
-func (biz *deleteUserBiz) DeleteUser(ctx context.Context, userID int) *common.AppError {
+func (biz *deleteUserBiz) DeleteUser(ctx context.Context, userID int) error {
 	user, err := biz.store.FindDataWithCondition(ctx, map[string]interface{}{"id": userID})
 	if err != nil {
 		return common.ErrEntityNotFound(usermodel.EntityName, err)
