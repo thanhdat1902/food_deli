@@ -2,6 +2,13 @@ package common
 
 import "gorm.io/gorm"
 
-type DBProvider interface {
+type AppContext interface {
 	GetMainDBConnection() *gorm.DB
+	GetSecretKey() string
+}
+
+type Requester interface {
+	GetID() int
+	GetEmail() string
+	GetRole() string
 }

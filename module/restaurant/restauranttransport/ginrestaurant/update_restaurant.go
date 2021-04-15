@@ -11,7 +11,7 @@ import (
 	"github.com/thanhdat1902/restapi/food_deli/module/restaurant/restaurantstorage"
 )
 
-func UpdateRestaurant(provider common.DBProvider) func(c *gin.Context) {
+func UpdateRestaurant(provider common.AppContext) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var data restaurantmodel.RestaurantUpdate
 		id, _ := strconv.Atoi(c.Param("restaurant-id"))

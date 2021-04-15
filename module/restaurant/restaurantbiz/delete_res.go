@@ -2,6 +2,7 @@ package restaurantbiz
 
 import (
 	"context"
+	"errors"
 
 	"github.com/thanhdat1902/restapi/food_deli/common"
 	"github.com/thanhdat1902/restapi/food_deli/module/restaurant/restaurantmodel"
@@ -12,17 +13,21 @@ type DeleteRestaurantStore interface {
 	Delete(ctx context.Context, resID int) *common.AppError
 }
 type deleteRestaurantBiz struct {
-	store DeleteRestaurantStore
+	store     DeleteRestaurantStore
+	requester common.Requester
 }
 
-func NewDeleteRestaurantBiz(store DeleteRestaurantStore) *deleteRestaurantBiz {
-	return &deleteRestaurantBiz{store: store}
+func NewDeleteRestaurantBiz(store DeleteRestaurantStore, requester common.Requester) *deleteRestaurantBiz {
+	return &deleteRestaurantBiz{store: store, requester: requester}
 }
 
 func (biz *deleteRestaurantBiz) DeleteRestaurant(ctx context.Context, resID int) *common.AppError {
 	res, err := biz.store.FindDataWithCondition(ctx, map[string]interface{}{"id": resID})
 	if err != nil {
 		return common.ErrEntityNotFound(restaurantmodel.Entity, err)
+	}
+	if res.OwnerID != biz.requester.GetID() {
+		return common.ErrNoPermission(errors.New("You do not have permission to delete this restaurant"))
 	}
 
 	if res.Status == 0 {

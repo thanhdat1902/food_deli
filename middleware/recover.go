@@ -5,7 +5,7 @@ import (
 	"github.com/thanhdat1902/restapi/food_deli/common"
 )
 
-func Recover(sc common.DBProvider) gin.HandlerFunc {
+func Recover(sc common.AppContext) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		defer func() {
 			if err := recover(); err != nil {

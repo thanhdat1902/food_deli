@@ -10,7 +10,7 @@ import (
 	"github.com/thanhdat1902/restapi/food_deli/module/restaurant/restaurantstorage"
 )
 
-func CreateRestaurant(provider common.DBProvider) func(c *gin.Context) {
+func CreateRestaurant(provider common.AppContext) func(c *gin.Context) {
 	return func(c *gin.Context) {
 
 		var res restaurantmodel.RestaurantCreate
@@ -18,6 +18,8 @@ func CreateRestaurant(provider common.DBProvider) func(c *gin.Context) {
 			c.JSON(http.StatusBadRequest, common.ErrInvalidRequest(err))
 			return
 		}
+		resquester := c.MustGet(common.CurrentUser).(common.Requester)
+		res.OwnerID = resquester.GetID()
 
 		db := provider.GetMainDBConnection()
 		store := restaurantstorage.NewSQLStore(db)

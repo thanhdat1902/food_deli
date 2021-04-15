@@ -2,6 +2,7 @@ package userbiz
 
 import (
 	"context"
+	"errors"
 
 	"github.com/thanhdat1902/restapi/food_deli/common"
 	"github.com/thanhdat1902/restapi/food_deli/component/tokenprovider"
@@ -18,7 +19,7 @@ type TokenConfig interface {
 }
 
 type loginBusiness struct {
-	appCtx        common.DBProvider
+	appCtx        common.AppContext
 	storeUser     LoginStorage
 	tokenProvider tokenprovider.Provider
 	hasher        Hasher
@@ -45,7 +46,7 @@ func (biz *loginBusiness) Login(ctx context.Context, data *usermodel.UserLogin) 
 	user, err := biz.storeUser.FindDataWithCondition(ctx, map[string]interface{}{"email": data.Email})
 
 	if err != nil {
-		return nil, common.ErrCannotGetEntity(usermodel.EntityName, err)
+		return nil, common.ErrCannotGetEntity(usermodel.EntityName, errors.New("Email does not exist"))
 	}
 
 	passHashed := biz.hasher.Hash(data.Password + user.Salt)

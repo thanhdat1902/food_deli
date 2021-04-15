@@ -16,6 +16,7 @@ type RestaurantCreate struct {
 	OpenHour        *string       `json:"open_hour" form:"open_hour" gorm:"column:open_hour"`
 	CloseHour       *string       `json:"close_hour" form:"close_hour" gorm:"column:close_hour"`
 	Description     string        `json:"description" form:"description" gorm:"column:description"`
+	OwnerID          int           `json:"-" gorm:"column:owner_id"`
 }
 
 // TableName of restaurants

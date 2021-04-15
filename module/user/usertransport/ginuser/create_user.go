@@ -11,7 +11,7 @@ import (
 	"github.com/thanhdat1902/restapi/food_deli/module/user/userstorage"
 )
 
-func CreateUser(provider common.DBProvider) func(c *gin.Context) {
+func CreateUser(provider common.AppContext) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var user usermodel.UserCreate
 

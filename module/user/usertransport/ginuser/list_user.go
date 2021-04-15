@@ -10,7 +10,7 @@ import (
 	"github.com/thanhdat1902/restapi/food_deli/module/user/userstorage"
 )
 
-func ListUsers(provider common.DBProvider) func(c *gin.Context) {
+func ListUsers(provider common.AppContext) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var paging common.Paging
 		if err := c.ShouldBind(&paging); err != nil {
@@ -27,6 +27,9 @@ func ListUsers(provider common.DBProvider) func(c *gin.Context) {
 		}
 		for i := 0; i < len(data); i++ {
 			data[i].GenUID(common.DbType)
+			if i == 0 {
+				paging.PreviousCursor = data[0].FakeID.String()
+			}
 			if i == paging.Limit-1 {
 				paging.NextCursor = data[i].FakeID.String()
 			}

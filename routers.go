@@ -9,17 +9,19 @@ import (
 )
 
 // SetupHomeRoute : Home router
-func SetUpHomeRoute(r *gin.Engine, appCtx common.DBProvider) {
+func SetUpHomeRoute(r *gin.Engine, appCtx common.AppContext) {
 	// Apply recover middleware
 	r.Use(middleware.Recover(appCtx))
 	// API list
 	routerV1 := r.Group("/v1")
 	routerV1.POST("/register", ginuser.CreateUser(appCtx))
+	routerV1.POST("/login", ginuser.Login(appCtx))
+	routerV1.GET("/profile", middleware.RequiredAuth(appCtx), ginuser.ProfileUser())
 	resRoute := routerV1.Group("/restaurants")
 	{
 		resRoute.GET("", ginrestaurant.ListRestaurant(appCtx))
-		resRoute.POST("", ginrestaurant.CreateRestaurant(appCtx))
-		resRoute.DELETE("/:restaurant-id", ginrestaurant.DeleteRestaurant(appCtx))
+		resRoute.POST("", middleware.RequiredAuth(appCtx), ginrestaurant.CreateRestaurant(appCtx))
+		resRoute.DELETE("/:restaurant-id", middleware.RequiredAuth(appCtx), ginrestaurant.DeleteRestaurant(appCtx))
 		resRoute.GET("/:restaurant-id", ginrestaurant.GetRestaurantByID(appCtx))
 	}
 	userRoute := routerV1.Group("/users")
@@ -31,6 +33,6 @@ func SetUpHomeRoute(r *gin.Engine, appCtx common.DBProvider) {
 	}
 }
 
-func SetUpAdminRoute(r *gin.Engine, appCtx common.DBProvider) {
+func SetUpAdminRoute(r *gin.Engine, appCtx common.AppContext) {
 
 }

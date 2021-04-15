@@ -12,7 +12,7 @@ func (s *store) ListUsers(ctx context.Context, cond map[string]interface{}, pagi
 	db = db.Table(usermodel.User{}.TableName())
 	db = db.Where(cond)
 	db = db.Where("status=?", 1)
-	db = db.Order("id")
+	db = db.Order("id desc")
 	var data []usermodel.User
 
 	if err := db.Count(&paging.Total).Error; err != nil {
@@ -23,7 +23,7 @@ func (s *store) ListUsers(ctx context.Context, cond map[string]interface{}, pagi
 		if err != nil {
 			return nil, err
 		}
-		db.Where("id >?", uid.GetLocalID())
+		db.Where("id <?", uid.GetLocalID())
 	} else {
 		if err := db.Offset((paging.Page - 1) * paging.Limit).Limit(paging.Limit).Find(&data).Error; err != nil {
 			return nil, common.ErrDB(err)

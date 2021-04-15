@@ -11,7 +11,7 @@ import (
 	"github.com/thanhdat1902/restapi/food_deli/module/user/userstorage"
 )
 
-func DeleteUser(provider common.DBProvider) func(c *gin.Context) {
+func DeleteUser(provider common.AppContext) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		id, _ := strconv.Atoi(c.Param("user-id"))
 		db := provider.GetMainDBConnection()

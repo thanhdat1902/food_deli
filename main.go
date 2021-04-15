@@ -28,7 +28,7 @@ func main() {
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	db = db.Debug()
-	appCtx := appctx.New(db)
+	appCtx := appctx.New(db, "datnguyen")
 	if err != nil {
 		log.Fatalln(err)
 	}

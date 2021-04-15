@@ -1,10 +1,14 @@
 package common
 
-import "math/rand"
+import (
+	"math/rand"
+	"time"
+)
 
 var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
 func randSequence(n int) string {
+	rand.Seed(time.Now().Unix())
 	b := make([]rune, n)
 	for i := range b {
 		b[i] = letters[rand.Intn(99999)%len(letters)]

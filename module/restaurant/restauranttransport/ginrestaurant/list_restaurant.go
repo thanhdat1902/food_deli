@@ -9,7 +9,7 @@ import (
 	"github.com/thanhdat1902/restapi/food_deli/module/restaurant/restaurantstorage"
 )
 
-func ListRestaurant(provider common.DBProvider) func(c *gin.Context) {
+func ListRestaurant(provider common.AppContext) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var paging common.Paging
 		if err := c.ShouldBind(&paging); err != nil {
