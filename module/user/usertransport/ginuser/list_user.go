@@ -26,7 +26,7 @@ func ListUsers(provider common.AppContext) func(c *gin.Context) {
 			panic(common.ErrCannotListEntity(usermodel.EntityName, err))
 		}
 		for i := 0; i < len(data); i++ {
-			data[i].GenUID(common.DbType)
+			data[i].Mask()
 			if i == 0 {
 				paging.PreviousCursor = data[0].FakeID.String()
 			}

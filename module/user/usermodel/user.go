@@ -23,6 +23,11 @@ type User struct {
 	Avatar          *common.Image `json:"avatar" form:"avatar" gorm:"column:avatar"`
 }
 
+// Mask to make all UID
+func (u *User) Mask() {
+	u.GenUID(common.DbTypeUser)
+}
+
 // Requester interface methods
 func (u *User) GetID() int {
 	return u.ID

@@ -8,7 +8,7 @@ import (
 )
 
 func (s *store) Update(ctx context.Context, res *restaurantmodel.RestaurantUpdate) *common.AppError {
-	db := s.db
+	db := s.db.Begin()
 	db = db.Table(restaurantmodel.Restaurant{}.TableName())
 	db = db.Where("id=?", res.ID)
 	if err := db.Updates(res).Error; err != nil {

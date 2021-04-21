@@ -26,6 +26,9 @@ func ListRestaurant(provider common.AppContext) func(c *gin.Context) {
 			c.JSON(err.StatusCode, err)
 			return
 		}
+		for i := 0; i < len(data); i++ {
+			data[i].Mask()
+		}
 		c.JSON(http.StatusOK, common.NewSuccessResponse(data, paging, nil))
 	}
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/thanhdat1902/restapi/food_deli/module/restaurant/restaurantmodel"
 )
 
-func (s *store) ListDataWithCondition(ctx context.Context, condition map[string]interface{}, paging *common.Paging) ([]restaurantmodel.Restaurant, *common.AppError) {
+func (s *store) ListDataWithCondition(ctx context.Context, condition map[string]interface{}, paging *common.Paging, moreData ...string) ([]restaurantmodel.Restaurant, *common.AppError) {
 	db := s.db
 	db = db.Table(restaurantmodel.Restaurant{}.TableName())
 	db = db.Where("status=?", 1)
@@ -19,6 +19,11 @@ func (s *store) ListDataWithCondition(ctx context.Context, condition map[string]
 	}
 	var data []restaurantmodel.Restaurant
 	paging.Fulfill()
+
+	for i := range moreData {
+		db.Preload(moreData[i])
+	}
+
 	if err := db.
 		Offset((paging.Page - 1) * paging.Limit).
 		Limit(paging.Limit).
